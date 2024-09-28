@@ -1,117 +1,76 @@
-<?php include 'header.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="pnl">
-  <div class="container">
-    <div class="col-sm-2 col-md-2 col-lg-2"><img class="pull-left" style="width: 150px" src="gambar/frontend/bidikmisi.png"></div>
-    <div class="col-sm-8 col-md-8 col-lg-8">
-      <center>
-        <h2>Sistem Informasi Manajemen Beasiswa Bidik Misi</h2>
-      </center>
-    </div>
-    <div class="col-sm-2 col-md-2 col-lg-2"><img class="pull-right" style="width: 65px" src="gambar/frontend/ristekdikti.png"></div>
-  </div>
-</div>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home-Muh29</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
 
-<br/>
-<br/>
+<body>
 
-<div class="row">
-  <div class="container">
-    <div class="page-header">
-      <h3>Informasi <small>Informasi seputar manajemen beasiswa bidik misi</small></h3>
-    </div>
 
-    <div class="row">
-      <?php 
-      $kategori = mysqli_query($koneksi,"SELECT * FROM kategori");
-      while($k = mysqli_fetch_array($kategori)){
-        ?>
-        <div class="col-md-3">
-          <ul class="list-group">
-            <li class="list-group-item"><b><?php echo $k['kategori_nama']; ?></b></li>
-            <?php 
-            $id_k = $k['kategori_id'];
-            $artikel = mysqli_query($koneksi,"SELECT * FROM artikel WHERE artikel_kategori='$id_k' ORDER BY artikel_id DESC LIMIT 5");
-            while($a=mysqli_fetch_array($artikel)){
-              ?>
-              <li class="list-group-item"><a class="text-black" href="single.php?id=<?php echo $a['artikel_id']; ?>"><?php echo $a['artikel_judul']; ?></a></li>
-              <?php 
-            }
-            ?>
-          </ul>
+    <nav class="navbar navbar-expand-lg navbar-drak fixed-top">
+        <div class="container"><a class="navbar-brand" href="#">MUH29</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home </a>
+                    </li>
+
+                </ul>
+
+            </div>
         </div>
-        <?php 
-      }
-      ?>
-
-    </div>
-  </div>
-</div>
-
-<br/>
-<br/>
-<br/>
+    </nav>
 
 
-<center>
-  <a target="_blank" href="https://bidikmisi.belmawa.ristekdikti.go.id/" class="btn btn-danger">MENDAFTAR BIDIKMISI DI RISTEK DIKTI</a>
-  <a href="daftar.php" class="btn btn-primary">MENDAFTAR DI SIMABID</a>
-</center>
+    <header>
+        <div class="container">
+            <div class="banner-text">
+                <div class="text-area">
+                    <span>S</span>
+                    <span>M</span>
+                    <span>P</span>&nbsp;
+                    <span>M</span>
+                    <span>U</span>
+                    <span>H</span>
+                    <span>A</span>
+                    <span>M</span>
+                    <span>M</span>
+                    <span>A</span>
+                    <span>D</span>
+                    <span>I</span>
+                    <span>Y</span>
+                    <span>A</span>
+                    <span>H</span>
+                    <span>29</span>
+                </div>
+                <p>Arsip Digital Akreditasi Sekolah</p>
+                <p>Silakan Login Terlebih Dahulu Untuk Mengakses Arsip Tersebut</p>
 
-<br/>
-<br/>
+                <p class="banner-btn">
+                    <a href="login.php">LOGIN WAKA KURIKULUM / GURU</a>
+                    <a href="user_login.php">LOGIN KEPALA SEKOLAH</a>
+                </p>
+            </div>
 
-<div class="row">
-  <div class="container">
-    <div class="page-header">
-      <h3>Q & A <small>Tanya jawab seputar Bidik Misi</small></h3>
-    </div>
-
-    <?php 
-    $qa = mysqli_query($koneksi,"SELECT * FROM qa WHERE qa_status='publish'");
-    while($q = mysqli_fetch_array($qa)){
-      ?>
-      <div class="panel panel-success">
-        <div class="panel-heading text-bold">
-          <?php echo $q['qa_pertanyaan']; ?>
         </div>
-        <div class="panel-body">
-          <?php echo $q['qa_jawaban']; ?>
-        </div>
-      </div>
-      <?php 
-    }
-    ?>
-
-    <br/>
-
-    <div class="page-header" id="pertanyaan">
-      <h4>Bertanya <small>Bertanya seputer Bidik Misi</small></h4>
-    </div>
-    
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2">
-
-        <?php 
-        if(isset($_GET['alert'])){
-          if($_GET['alert'] == "pertanyaan"){
-            echo "<div class='alert alert-success text-center'>Pertanyaan anda telah tersimpan, silahkan menunggu jawaban dari admin dalam fitur Q & A ini.</div>";
-          }
-        }
-        ?>
-
-        <form action="pertanyaan_act.php" method="POST">
-          <div class="form-group">
-            <label>Pertanyaan</label>
-            <textarea class="form-control" name="pertanyaan" required="required"></textarea>
-          </div>
-          <input type="submit" class="btn btn-block btn-warning" value="Kirim Pertanyaan">
-        </form>
-      </div>
-    </div>
+    </header>
 
 
-  </div>
-</div>
 
-<?php include 'footer.php'; ?>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+</body>
+
+</html>
